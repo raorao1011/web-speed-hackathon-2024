@@ -19,7 +19,6 @@ import {
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { useId, useMemo, useState } from 'react';
-import _ from 'underscore';
 
 import { useBookList } from '../../features/books/hooks/useBookList';
 import { isContains } from '../../lib/filter/isContains';
@@ -197,7 +196,7 @@ export const BookListPage: React.FC = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {_.map(filteredBookList, (book) => (
+                {filteredBookList.map((book) => (
                   <Tr key={book.id}>
                     <Td textAlign="center" verticalAlign="middle">
                       <Button
