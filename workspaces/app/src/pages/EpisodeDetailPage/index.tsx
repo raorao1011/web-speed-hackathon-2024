@@ -38,7 +38,7 @@ const EpisodeDetailPage: React.FC = () => {
                 description: episode.description,
                 id: episode.id,
                 image: {
-                  id: episode.image.id,
+                  id: episode.imageId,
                 },
                 name: episode.name,
               }}
