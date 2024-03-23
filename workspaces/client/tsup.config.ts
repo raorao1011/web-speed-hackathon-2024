@@ -61,7 +61,7 @@ export default defineConfig(async (): Promise<Options[]> => {
       sourcemap: 'inline',
       splitting: false,
       target: ['chrome58', 'firefox57', 'safari11', 'edge18'],
-      treeshake: false,
+      treeshake: true,
     },
   ];
 });
