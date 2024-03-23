@@ -46,7 +46,14 @@ type AuthorModalState =
     }
   | {
       mode: typeof AuthorModalMode.Detail;
-      params: { authorId: string };
+      params: {
+        authorId: string;
+        description: string;
+        image: {
+          id: string;
+        };
+        name: string;
+      };
     }
   | {
       mode: typeof AuthorModalMode.Create;
@@ -88,7 +95,14 @@ export const AuthorListPage: React.FC = () => {
 
   const [modalState, setModalState] = useState<AuthorModalState>({
     mode: AuthorModalMode.None,
-    params: {},
+    params: {
+      description: '',
+      id: '',
+      image: {
+        id: '',
+      },
+      name: '',
+    },
   });
 
   return (
@@ -169,7 +183,19 @@ export const AuthorListPage: React.FC = () => {
                     <Td textAlign="center" verticalAlign="middle">
                       <Button
                         colorScheme="teal"
-                        onClick={() => setModalState({ mode: AuthorModalMode.Detail, params: { authorId: author.id } })}
+                        onClick={() =>
+                          setModalState({
+                            mode: AuthorModalMode.Detail,
+                            params: {
+                              authorId: author.id,
+                              description: author.description,
+                              image: {
+                                id: author.image.id,
+                              },
+                              name: author.name,
+                            },
+                          })
+                        }
                         variant="solid"
                       >
                         詳細
@@ -192,7 +218,14 @@ export const AuthorListPage: React.FC = () => {
       {modalState.mode === AuthorModalMode.Detail ? (
         <AuthorDetailModal
           isOpen
-          authorId={modalState.params.authorId}
+          author={{
+            description: modalState.params.description,
+            id: modalState.params.authorId,
+            image: {
+              id: modalState.params.image.id,
+            },
+            name: modalState.params.name,
+          }}
           onClose={() => setModalState({ mode: AuthorModalMode.None, params: {} })}
         />
       ) : null}
