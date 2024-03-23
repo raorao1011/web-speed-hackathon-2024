@@ -17,6 +17,7 @@ export const LoginContent: React.FC = () => {
     async onSubmit(values) {
       login.mutate({ email: values.email, password: values.password });
     },
+    validateOnChange: false,
     validationSchema: yup.object().shape({
       email: yup
         .string()
