@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 import { Flex } from '../../../foundation/components/Flex';
 import { Image } from '../../../foundation/components/Image';
-import { Link } from '../../../foundation/components/Link';
 import { Text } from '../../../foundation/components/Text';
 import { useImage } from '../../../foundation/hooks/useImage';
 import { Color, Radius, Space, Typography } from '../../../foundation/styles/variables';
@@ -49,7 +49,7 @@ const BookCard: React.FC<Props> = (props) => {
   const authorImageUrl = useImage({ height: 32, imageId: props.bookImageId, width: 32 });
 
   return (
-    <_Wrapper href={`/books/${props.bookId}`}>
+    <_Wrapper to={`/books/${props.bookId}`}>
       {imageUrl != null && (
         <_ImgWrapper>
           <Image alt={props.bookImageAlt} height={128} objectFit="cover" src={imageUrl} width={192} />

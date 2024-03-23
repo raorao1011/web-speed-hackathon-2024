@@ -1,11 +1,11 @@
 import { NavigateNext } from '@mui/icons-material';
 import { Suspense } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Box } from '../../../foundation/components/Box';
 import { Flex } from '../../../foundation/components/Flex';
 import { Image } from '../../../foundation/components/Image';
-import { Link } from '../../../foundation/components/Link';
 import { Separator } from '../../../foundation/components/Separator';
 import { Spacer } from '../../../foundation/components/Spacer';
 import { Text } from '../../../foundation/components/Text';
@@ -55,7 +55,7 @@ const RankingCard: React.FC<Props> = (props) => {
 
   return (
     <_Wrapper>
-      <_Link href={`/books/${props.bookId}`}>
+      <_Link to={`/books/${props.bookId}`}>
         <Spacer height={Space * 1.5} />
         <Flex align="flex-start" gap={Space * 2.5} justify="flex-start">
           {imageUrl != null && (
