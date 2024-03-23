@@ -30,7 +30,19 @@ const EpisodeDetailPage: React.FC = () => {
       <Box aria-label="エピソード一覧" as="section" px={Space * 2}>
         <Flex align="center" as="ul" direction="column" justify="center">
           {book.episodes.map((episode) => (
-            <EpisodeListItem key={episode.id} bookId={bookId} episodeId={episode.id} />
+            <EpisodeListItem
+              key={episode.id}
+              bookId={bookId}
+              episode={{
+                chapter: episode.chapter,
+                description: episode.description,
+                id: episode.id,
+                image: {
+                  id: episode.image.id,
+                },
+                name: episode.name,
+              }}
+            />
           ))}
         </Flex>
       </Box>
