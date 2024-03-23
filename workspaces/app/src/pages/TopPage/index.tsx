@@ -39,7 +39,16 @@ const TopPage: React.FC = () => {
           <Box maxWidth="100%" overflowX="scroll" overflowY="hidden">
             <Flex align="stretch" direction="row" gap={Space * 2} justify="flex-start">
               {featureList.map((feature) => (
-                <FeatureCard key={feature.id} bookId={feature.book.id} />
+                <FeatureCard
+                  key={feature.id}
+                  bookAuthorImageId={feature.book.author.image.id}
+                  bookAuthorName={feature.book.author.name}
+                  bookDescription={feature.book.description}
+                  bookId={feature.book.id}
+                  bookImageAlt={feature.book.image.alt}
+                  bookImageId={feature.book.image.id}
+                  bookName={feature.book.name}
+                />
               ))}
             </Flex>
           </Box>
@@ -55,7 +64,16 @@ const TopPage: React.FC = () => {
           <Box maxWidth="100%" overflowX="hidden" overflowY="hidden">
             <Flex align="center" as="ul" direction="column" justify="center">
               {rankingList.map((ranking) => (
-                <RankingCard key={ranking.id} bookId={ranking.book.id} />
+                <RankingCard
+                  key={ranking.id}
+                  bookAuthorImageId={ranking.book.author.image.id}
+                  bookAuthorName={ranking.book.author.name}
+                  bookDescription={ranking.book.description}
+                  bookId={ranking.book.id}
+                  bookImageAlt={ranking.book.image.alt}
+                  bookImageId={ranking.book.image.id}
+                  bookName={ranking.book.name}
+                />
               ))}
             </Flex>
           </Box>
@@ -71,7 +89,16 @@ const TopPage: React.FC = () => {
           <Box maxWidth="100%" overflowX="scroll" overflowY="hidden">
             <Flex align="stretch" gap={Space * 2} justify="flex-start">
               {release.books.map((book) => (
-                <BookCard key={book.id} bookId={book.id} />
+                <BookCard
+                  key={book.id}
+                  bookAuthorImageId={book.author.image.id}
+                  bookAuthorName={book.author.name}
+                  bookDescription={book.description}
+                  bookId={book.id}
+                  bookImageAlt={book.image.alt}
+                  bookImageId={book.image.id}
+                  bookName={book.name}
+                />
               ))}
             </Flex>
           </Box>
