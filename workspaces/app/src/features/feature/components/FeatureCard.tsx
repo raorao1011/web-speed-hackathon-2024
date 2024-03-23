@@ -60,7 +60,7 @@ const FeatureCard: React.FC<Props> = (props) => {
   const authorImageUrl = useImage({ height: 32, imageId: props.bookAuthorImageId, width: 32 });
 
   return (
-    <_Wrapper to={`/propss/${props.bookId}`}>
+    <_Wrapper to={`/books/${props.bookId}`}>
       {imageUrl != null && (
         <_ImgWrapper>
           <Image alt={props.bookImageAlt} height={96} objectFit="cover" src={imageUrl} width={96} />
