@@ -1,6 +1,6 @@
 export async function registerServiceWorker() {
   const registration = await navigator.serviceWorker
-    .register('/serviceworker.global.js', { updateViaCache: "imports" })
+    .register('/serviceworker.global.js', { updateViaCache: 'none' })
     .then(() => navigator.serviceWorker.ready);
 
   // Wait until the service worker becomes active
