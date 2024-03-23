@@ -36,27 +36,27 @@ class RankingRepository implements RankingRepositoryInterface {
             with: {
               author: {
                 columns: {
-                  description: true,
-                  id: true,
+                  // description: true,
+                  // id: true,
                   name: true,
                 },
                 with: {
                   image: {
                     columns: {
-                      alt: true,
+                      // alt: true,
                       id: true,
                     },
                   },
                 },
               },
-              episodes: {
-                columns: {
-                  chapter: true,
-                  description: true,
-                  id: true,
-                  name: true,
-                },
-              },
+              // episodes: {
+              //   columns: {
+              //     chapter: true,
+              //     description: true,
+              //     id: true,
+              //     name: true,
+              //   },
+              // },
               image: {
                 columns: {
                   alt: true,
