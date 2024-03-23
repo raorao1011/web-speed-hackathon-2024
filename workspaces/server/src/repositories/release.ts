@@ -52,14 +52,14 @@ class ReleaseRepository implements ReleaseRepositoryInterface {
             with: {
               author: {
                 columns: {
-                  description: true,
-                  id: true,
+                  // description: true,
+                  // id: true,
                   name: true,
                 },
                 with: {
                   image: {
                     columns: {
-                      alt: true,
+                      // alt: true,
                       id: true,
                     },
                   },
