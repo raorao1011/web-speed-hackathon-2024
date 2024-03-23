@@ -20,7 +20,6 @@ import {
 import { useFormik } from 'formik';
 import { useId, useMemo, useState } from 'react';
 import _ from 'underscore';
-import { create } from 'zustand';
 
 import { useBookList } from '../../features/books/hooks/useBookList';
 import { isContains } from '../../lib/filter/isContains';
@@ -56,12 +55,6 @@ type BookModalState =
       mode: typeof BookModalMode.Create;
       params: object;
     };
-
-type BookModalAction = {
-  close: () => void;
-  openCreate: () => void;
-  openDetail: (bookId: string) => void;
-};
 
 export const BookListPage: React.FC = () => {
   const { data: bookList = [] } = useBookList();
@@ -107,26 +100,10 @@ export const BookListPage: React.FC = () => {
     }
   }, [formik.values.kind, formik.values.query, bookList]);
 
-  const [useModalStore] = useState(() => {
-    return create<BookModalState & BookModalAction>()((set) => ({
-      ...{
-        mode: BookModalMode.None,
-        params: {},
-      },
-      ...{
-        close() {
-          set({ mode: BookModalMode.None, params: {} });
-        },
-        openCreate() {
-          set({ mode: BookModalMode.Create, params: {} });
-        },
-        openDetail(bookId) {
-          set({ mode: BookModalMode.Detail, params: { bookId } });
-        },
-      },
-    }));
+  const [modalState, setModalState] = useState<BookModalState>({
+    mode: BookModalMode.None,
+    params: {},
   });
-  const modalState = useModalStore();
 
   return (
     <>
@@ -202,7 +179,11 @@ export const BookListPage: React.FC = () => {
             <Text as="h2" fontSize="xl" fontWeight="bold" id={bookListA11yId}>
               作品一覧
             </Text>
-            <Button colorScheme="teal" onClick={() => modalState.openCreate()} variant="solid">
+            <Button
+              colorScheme="teal"
+              onClick={() => setModalState({ mode: BookModalMode.Create, params: {} })}
+              variant="solid"
+            >
               作品を追加
             </Button>
           </Flex>
@@ -219,7 +200,11 @@ export const BookListPage: React.FC = () => {
                 {_.map(filteredBookList, (book) => (
                   <Tr key={book.id}>
                     <Td textAlign="center" verticalAlign="middle">
-                      <Button colorScheme="teal" onClick={() => modalState.openDetail(book.id)} variant="solid">
+                      <Button
+                        colorScheme="teal"
+                        onClick={() => setModalState({ mode: BookModalMode.Detail, params: { bookId: book.id } })}
+                        variant="solid"
+                      >
                         詳細
                       </Button>
                     </Td>
@@ -244,9 +229,15 @@ export const BookListPage: React.FC = () => {
       </Stack>
 
       {modalState.mode === BookModalMode.Detail ? (
-        <BookDetailModal isOpen bookId={modalState.params.bookId} onClose={() => modalState.close()} />
+        <BookDetailModal
+          isOpen
+          bookId={modalState.params.bookId}
+          onClose={() => setModalState({ mode: BookModalMode.None, params: {} })}
+        />
       ) : null}
-      {modalState.mode === BookModalMode.Create ? <CreateBookModal isOpen onClose={() => modalState.close()} /> : null}
+      {modalState.mode === BookModalMode.Create ? (
+        <CreateBookModal isOpen onClose={() => setModalState({ mode: BookModalMode.None, params: {} })} />
+      ) : null}
     </>
   );
 };
