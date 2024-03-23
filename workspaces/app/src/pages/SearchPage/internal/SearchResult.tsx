@@ -33,7 +33,13 @@ export const SearchResult: React.FC<Props> = ({ books, keyword }) => {
         }
       >
         {relatedBooks.map((book) => (
-          <BookListItem key={book.id} bookId={book.id} />
+          <BookListItem
+            key={book.id}
+            bookDescription={book.description}
+            bookId={book.id}
+            bookImageId={book.image.id}
+            bookName={book.name}
+          />
         ))}
         {relatedBooks.length === 0 && (
           <Text color={Color.MONO_100} typography={Typography.NORMAL14}>
