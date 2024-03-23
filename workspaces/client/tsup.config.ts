@@ -38,14 +38,8 @@ export default defineConfig(async (): Promise<Options[]> => {
       },
       esbuildPlugins: [
         polyfillNode({
-          globals: {
-            process: false,
-          },
-          polyfills: {
-            events: true,
-            fs: true,
-            path: true,
-          },
+          globals: {},
+          polyfills: {},
         }),
       ],
       format: 'iife',
