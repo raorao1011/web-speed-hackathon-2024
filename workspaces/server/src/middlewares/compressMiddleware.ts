@@ -22,6 +22,7 @@ export const compressMiddleware = createMiddleware(async (c, next) => {
 
       c.res.headers.delete('Content-Length');
       c.res.headers.append('Cache-Control', 'no-transform');
+      c.res.headers.append('Cache-Control', 'max-age=604800');
       c.res.headers.set('X-Content-Encoding', 'zstd');
       break;
     }
