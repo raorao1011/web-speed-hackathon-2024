@@ -1,5 +1,4 @@
 import { NavigateNext } from '@mui/icons-material';
-import { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -11,7 +10,6 @@ import { Spacer } from '../../../foundation/components/Spacer';
 import { Text } from '../../../foundation/components/Text';
 import { useImage } from '../../../foundation/hooks/useImage';
 import { Color, Radius, Space, Typography } from '../../../foundation/styles/variables';
-// import { useBook } from '../../book/hooks/useBook';
 
 const _Wrapper = styled.li`
   width: 100%;
@@ -47,7 +45,7 @@ type Props = {
   bookName: string;
 };
 
-const RankingCard: React.FC<Props> = (props) => {
+export const RankingCard: React.FC<Props> = (props) => {
   const imageUrl = useImage({ height: 96, imageId: props.bookImageId, width: 96 });
   const authorImageUrl = useImage({ height: 32, imageId: props.bookAuthorImageId, width: 32 });
 
@@ -117,12 +115,8 @@ const RankingCard: React.FC<Props> = (props) => {
   );
 };
 
-const RankingCardWithSuspense: React.FC<Props> = (props) => {
-  return (
-    <Suspense fallback={null}>
-      <RankingCard {...props} />
-    </Suspense>
-  );
-};
-
-export { RankingCardWithSuspense as RankingCard };
+export const RankingCardSkeleton = styled.li`
+  width: 100%;
+  height: 155px;
+  border-bottom: solid 1px rgb(211, 211, 211);
+`;

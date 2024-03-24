@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
@@ -7,7 +6,6 @@ import { Image } from '../../../foundation/components/Image';
 import { Text } from '../../../foundation/components/Text';
 import { useImage } from '../../../foundation/hooks/useImage';
 import { Color, Radius, Space, Typography } from '../../../foundation/styles/variables';
-// import { useBook } from '../hooks/useBook';
 
 const _Wrapper = styled(Link)`
   display: flex;
@@ -42,8 +40,7 @@ type Props = {
   bookName: string;
 };
 
-const BookCard: React.FC<Props> = (props) => {
-  // const { data: book } = useBook({ params: { bookId } });
+export const BookCard: React.FC<Props> = (props) => {
 
   const imageUrl = useImage({ height: 128, imageId: props.bookImageId, width: 192 });
   const authorImageUrl = useImage({ height: 32, imageId: props.bookImageId, width: 32 });
@@ -92,12 +89,10 @@ const BookCard: React.FC<Props> = (props) => {
   );
 };
 
-const BookCardWithSuspense: React.FC<Props> = (props) => {
-  return (
-    <Suspense fallback={null}>
-      <BookCard {...props} />
-    </Suspense>
-  );
-};
-
-export { BookCardWithSuspense as BookCard };
+export const BookCardSkeleton = styled.div`
+  border-radius: ${Radius.SMALL};
+  background-color: ${Color.MONO_A};
+  width: 192px;
+  height: 244px;
+  border: 1px solid ${Color.MONO_30};
+`;

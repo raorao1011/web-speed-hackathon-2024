@@ -1,9 +1,9 @@
 import { Suspense, useId } from 'react';
 
-import { BookCard } from '../../features/book/components/BookCard';
-import { FeatureCard } from '../../features/feature/components/FeatureCard';
+import { BookCard, BookCardSkeleton } from '../../features/book/components/BookCard';
+import { FeatureCard, FeatureCardSkeleton } from '../../features/feature/components/FeatureCard';
 import { useFeatureList } from '../../features/feature/hooks/useFeatureList';
-import { RankingCard } from '../../features/ranking/components/RankingCard';
+import { RankingCard, RankingCardSkeleton } from '../../features/ranking/components/RankingCard';
 import { useRankingList } from '../../features/ranking/hooks/useRankingList';
 import { useRelease } from '../../features/release/hooks/useRelease';
 import { Box } from '../../foundation/components/Box';
@@ -16,11 +16,6 @@ import { getDayOfWeekStr } from '../../lib/date/getDayOfWeekStr';
 import { CoverSection } from './internal/CoverSection';
 
 const TopPage: React.FC = () => {
-  const todayStr = getDayOfWeekStr(new Date());
-  const { data: release } = useRelease({ params: { dayOfWeek: todayStr } });
-  const { data: featureList } = useFeatureList({ query: {} });
-  const { data: rankingList } = useRankingList({ query: {} });
-
   const pickupA11yId = useId();
   const rankingA11yId = useId();
   const todayA11yId = useId();
@@ -38,18 +33,17 @@ const TopPage: React.FC = () => {
           <Spacer height={Space * 2} />
           <Box maxWidth="100%" overflowX="scroll" overflowY="hidden">
             <Flex align="stretch" direction="row" gap={Space * 2} justify="flex-start">
-              {featureList.map((feature) => (
-                <FeatureCard
-                  key={feature.id}
-                  bookAuthorImageId={feature.book.author.image.id}
-                  bookAuthorName={feature.book.author.name}
-                  bookDescription={feature.book.description}
-                  bookId={feature.book.id}
-                  bookImageAlt={feature.book.image.alt}
-                  bookImageId={feature.book.image.id}
-                  bookName={feature.book.name}
-                />
-              ))}
+              <Suspense
+                fallback={
+                  <>
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <FeatureCardSkeleton key={i} />
+                    ))}
+                  </>
+                }
+              >
+                <PickupList />
+              </Suspense>
             </Flex>
           </Box>
         </Box>
@@ -63,18 +57,18 @@ const TopPage: React.FC = () => {
           <Spacer height={Space * 2} />
           <Box maxWidth="100%" overflowX="hidden" overflowY="hidden">
             <Flex align="center" as="ul" direction="column" justify="center">
-              {rankingList.map((ranking) => (
-                <RankingCard
-                  key={ranking.id}
-                  bookAuthorImageId={ranking.book.author.image.id}
-                  bookAuthorName={ranking.book.author.name}
-                  bookDescription={ranking.book.description}
-                  bookId={ranking.book.id}
-                  bookImageAlt={ranking.book.image.alt}
-                  bookImageId={ranking.book.image.id}
-                  bookName={ranking.book.name}
-                />
-              ))}
+              <Suspense
+                fallback={
+                  <>
+                    {Array.from({ length: 10 }).map((_, i) => (
+                      <RankingCardSkeleton key={i} />
+                    ))}
+                    <Spacer height={1} />
+                  </>
+                }
+              >
+                <RankingList />
+              </Suspense>
             </Flex>
           </Box>
         </Box>
@@ -88,23 +82,86 @@ const TopPage: React.FC = () => {
           <Spacer height={Space * 2} />
           <Box maxWidth="100%" overflowX="scroll" overflowY="hidden">
             <Flex align="stretch" gap={Space * 2} justify="flex-start">
-              {release.books.map((book) => (
-                <BookCard
-                  key={book.id}
-                  bookAuthorImageId={book.author.image.id}
-                  bookAuthorName={book.author.name}
-                  bookDescription={book.description}
-                  bookId={book.id}
-                  bookImageAlt={book.image.alt}
-                  bookImageId={book.image.id}
-                  bookName={book.name}
-                />
-              ))}
+              <Suspense
+                fallback={
+                  <>
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <BookCardSkeleton key={i} />
+                    ))}
+                  </>
+                }
+              >
+                <ReleaseList />
+              </Suspense>
             </Flex>
           </Box>
         </Box>
       </Box>
     </Flex>
+  );
+};
+
+const PickupList: React.FC = () => {
+  const { data: featureList } = useFeatureList({ query: {} });
+
+  return (
+    <>
+      {featureList.map((feature) => (
+        <FeatureCard
+          key={feature.id}
+          bookAuthorImageId={feature.book.author.image.id}
+          bookAuthorName={feature.book.author.name}
+          bookDescription={feature.book.description}
+          bookId={feature.book.id}
+          bookImageAlt={feature.book.image.alt}
+          bookImageId={feature.book.image.id}
+          bookName={feature.book.name}
+        />
+      ))}
+    </>
+  );
+};
+
+const RankingList: React.FC = () => {
+  const { data: rankingList } = useRankingList({ query: {} });
+
+  return (
+    <>
+      {rankingList.map((ranking) => (
+        <RankingCard
+          key={ranking.id}
+          bookAuthorImageId={ranking.book.author.image.id}
+          bookAuthorName={ranking.book.author.name}
+          bookDescription={ranking.book.description}
+          bookId={ranking.book.id}
+          bookImageAlt={ranking.book.image.alt}
+          bookImageId={ranking.book.image.id}
+          bookName={ranking.book.name}
+        />
+      ))}
+    </>
+  );
+};
+
+const ReleaseList: React.FC = () => {
+  const todayStr = getDayOfWeekStr(new Date());
+  const { data: release } = useRelease({ params: { dayOfWeek: todayStr } });
+
+  return (
+    <>
+      {release.books.map((book) => (
+        <BookCard
+          key={book.id}
+          bookAuthorImageId={book.author.image.id}
+          bookAuthorName={book.author.name}
+          bookDescription={book.description}
+          bookId={book.id}
+          bookImageAlt={book.image.alt}
+          bookImageId={book.image.id}
+          bookName={book.name}
+        />
+      ))}
+    </>
   );
 };
 
