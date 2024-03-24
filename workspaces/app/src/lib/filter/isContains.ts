@@ -1,27 +1,37 @@
-import { compareWithFlags, PRIMARY as UCA_L1_FLAG, SECONDARY as UCA_L2_FLAG } from 'unicode-collation-algorithm2';
-
-// UCA_L1_FLAG はベース文字、UCA_L2_FLAG は濁点・半濁点・アクセントを区別する (sensitivity: accent に相当)
-const SENSITIVITY_ACCENT_FLAG = UCA_L1_FLAG ^ UCA_L2_FLAG;
-
 type Params = {
   query: string;
   target: string;
 };
 
 // ひらがな・カタカナ・半角・全角を区別せずに文字列が含まれているかを調べる
-export function isContains({ query, target }: Params): boolean {
+export const isContains = ({ query, target }: Params) => {
   // target の先頭から順に query が含まれているかを調べる
-  TARGET_LOOP: for (let offset = 0; offset <= target.length - query.length; offset++) {
+  for (let offset = 0; offset <= target.length - query.length; offset++) {
+    let match = true;
     for (let idx = 0; idx < query.length; idx++) {
-      // 1文字ずつ Unicode Collation Algorithm で比較する
-      // unicode-collation-algorithm2 は Default Unicode Collation Element Table (DUCET) を collation として使う
-      if (compareWithFlags(target[offset + idx]!, query[idx]!, SENSITIVITY_ACCENT_FLAG) !== 0) {
-        continue TARGET_LOOP;
+      // インデックスが範囲内にあるかどうかを確認する
+      if (offset + idx >= target.length || idx >= query.length) {
+        match = false;
+        break;
+      }
+      // 1文字ずつ比較する
+      if (!compareCharacters(target[offset + idx] as string, query[idx] as string)) {
+        match = false;
+        break;
       }
     }
-    // query のすべての文字が含まれていたら true を返す
-    return true;
+    if (match) {
+      // query のすべての文字が含まれていたら true を返す
+      return true;
+    }
   }
   // target の最後まで query が含まれていなかったら false を返す
   return false;
+};
+
+function compareCharacters(char1: string, char2: string) {
+  // ベース文字のみを比較する
+  const baseChar1 = char1.normalize('NFKD').replace(/[\u0300-\u036F]/g, '');
+  const baseChar2 = char2.normalize('NFKD').replace(/[\u0300-\u036F]/g, '');
+  return baseChar1.localeCompare(baseChar2, 'en', { sensitivity: 'base' }) === 0;
 }
