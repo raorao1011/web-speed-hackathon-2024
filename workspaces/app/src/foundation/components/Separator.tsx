@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const _Separator = styled.div`
-  display: block;
   width: 100%;
+  background-color: rgb(211, 211, 211);
   height: 1px;
 `;
 
