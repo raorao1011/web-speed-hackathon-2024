@@ -35,78 +35,118 @@ export const Footer: React.FC = () => {
   const updateDialogContent = useSetAtom(DialogContentAtom);
 
   const handleRequestToTermDialogOpen = async () => {
-    const { TERM } = await import('../constants/Term');
-    updateDialogContent(
-      <_Content aria-labelledby={termDialogA11yId} role="dialog">
-        <Text as="h2" color={Color.MONO_100} id={termDialogA11yId} typography={Typography.NORMAL16}>
-          利用規約
-        </Text>
-        <Spacer height={Space * 1} />
-        <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {TERM}
-        </Text>
-      </_Content>,
-    );
+    await fetch('../constants/Term')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.text();
+      })
+      .then((text) => {
+        updateDialogContent(
+          <_Content aria-labelledby={termDialogA11yId} role="dialog">
+            <Text as="h2" color={Color.MONO_100} id={termDialogA11yId} typography={Typography.NORMAL16}>
+              利用規約
+            </Text>
+            <Spacer height={Space * 1} />
+            <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
+              {text}
+            </Text>
+          </_Content>,
+        );
+      });
   };
 
   const handleRequestToContactDialogOpen = async () => {
-    const { CONTACT } = await import('../constants/Contact');
-    updateDialogContent(
-      <_Content aria-labelledby={contactDialogA11yId} role="dialog">
-        <Text as="h2" color={Color.MONO_100} id={contactDialogA11yId} typography={Typography.NORMAL16}>
-          お問い合わせ
-        </Text>
-        <Spacer height={Space * 1} />
-        <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {CONTACT}
-        </Text>
-      </_Content>,
-    );
+    fetch('../constants/Contact')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network res wes not ok');
+        }
+        return res.text();
+      })
+      .then((text) => {
+        updateDialogContent(
+          <_Content aria-labelledby={contactDialogA11yId} role="dialog">
+            <Text as="h2" color={Color.MONO_100} id={contactDialogA11yId} typography={Typography.NORMAL16}>
+              お問い合わせ
+            </Text>
+            <Spacer height={Space * 1} />
+            <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
+              {text}
+            </Text>
+          </_Content>,
+        );
+      });
   };
 
   const handleRequestToQuestionDialogOpen = async () => {
-    const { QUESTION } = await import('../constants/Question');
-    updateDialogContent(
-      <_Content aria-labelledby={questionDialogA11yId} role="dialog">
-        <Text as="h2" color={Color.MONO_100} id={questionDialogA11yId} typography={Typography.NORMAL16}>
-          Q&A
-        </Text>
-        <Spacer height={Space * 1} />
-        <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {QUESTION}
-        </Text>
-      </_Content>,
-    );
+    fetch('../constants/Question')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network res wes not ok');
+        }
+        return res.text();
+      })
+      .then((text) => {
+        updateDialogContent(
+          <_Content aria-labelledby={questionDialogA11yId} role="dialog">
+            <Text as="h2" color={Color.MONO_100} id={questionDialogA11yId} typography={Typography.NORMAL16}>
+              Q&A
+            </Text>
+            <Spacer height={Space * 1} />
+            <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
+              {text}
+            </Text>
+          </_Content>,
+        );
+      });
   };
 
   const handleRequestToCompanyDialogOpen = async () => {
-    const { COMPANY } = await import('../constants/Company');
-    updateDialogContent(
-      <_Content aria-labelledby={companyDialogA11yId} role="dialog">
-        <Text as="h2" color={Color.MONO_100} id={companyDialogA11yId} typography={Typography.NORMAL16}>
-          運営会社
-        </Text>
-        <Spacer height={Space * 1} />
-        <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {COMPANY}
-        </Text>
-      </_Content>,
-    );
+    fetch('../constants/Company')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network res wes not ok');
+        }
+        return res.text();
+      })
+      .then((text) => {
+        updateDialogContent(
+          <_Content aria-labelledby={companyDialogA11yId} role="dialog">
+            <Text as="h2" color={Color.MONO_100} id={companyDialogA11yId} typography={Typography.NORMAL16}>
+              運営会社
+            </Text>
+            <Spacer height={Space * 1} />
+            <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
+              {text}
+            </Text>
+          </_Content>,
+        );
+      });
   };
 
   const handleRequestToOverviewDialogOpen = async () => {
-    const { OVERVIEW } = await import('../constants/Overview');
-    updateDialogContent(
-      <_Content aria-labelledby={overviewDialogA11yId} role="dialog">
-        <Text as="h2" color={Color.MONO_100} id={overviewDialogA11yId} typography={Typography.NORMAL16}>
-          Cyber TOONとは
-        </Text>
-        <Spacer height={Space * 1} />
-        <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {OVERVIEW}
-        </Text>
-      </_Content>,
-    );
+    fetch('../constants/Overview')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network res wes not ok');
+        }
+        return res.text();
+      })
+      .then((text) => {
+        updateDialogContent(
+          <_Content aria-labelledby={overviewDialogA11yId} role="dialog">
+            <Text as="h2" color={Color.MONO_100} id={overviewDialogA11yId} typography={Typography.NORMAL16}>
+              Cyber TOONとは
+            </Text>
+            <Spacer height={Space * 1} />
+            <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
+              {text}
+            </Text>
+          </_Content>,
+        );
+      });
   };
 
   return (
