@@ -58,7 +58,7 @@ program
       const exportImagePath = path.resolve(
         outputDirectory,
         path.dirname(path.relative(inputDirectory, sourceImagePath)),
-        path.parse(sourceImagePath).name + '.webp',
+        path.parse(sourceImagePath).name + '.jxl',
       );
       await writeJpegXL({ filepath: exportImagePath, imageData: exportImageData });
 
@@ -77,7 +77,7 @@ program
       format: '[{bar}] {percentage}% | ETA: {eta}s | {value}/{total} | {filename}',
     });
 
-    const imagePathList = await globby('**/*.webp', {
+    const imagePathList = await globby('**/*.jxl', {
       absolute: true,
       cwd: path.resolve(process.cwd(), inputDirectory),
     });
