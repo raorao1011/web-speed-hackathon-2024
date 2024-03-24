@@ -47,8 +47,7 @@ export default defineConfig(async (): Promise<Options[]> => {
         '.json?file': 'file',
         '.wasm': 'binary',
       },
-      // 最後にはfalseにする
-      metafile: true,
+      metafile: false,
       minify: true,
       outDir: OUTPUT_DIR,
       platform: 'browser',
