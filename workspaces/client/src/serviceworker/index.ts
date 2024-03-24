@@ -28,7 +28,7 @@ self.addEventListener('fetch', (ev: FetchEvent) => {
 async function onFetch(request: Request): Promise<Response> {
   const res = await fetch(request);
 
-  if (res.headers.get('Content-Type') === 'image/jxl') {
+  if (res.headers.get('Content-Type') === 'image/webp') {
     return transformJpegXLToBmp(res);
   } else {
     return res;
