@@ -52,7 +52,15 @@ const BookCard: React.FC<Props> = (props) => {
     <_Wrapper to={`/books/${props.bookId}`}>
       {imageUrl != null && (
         <_ImgWrapper>
-          <Image alt={props.bookImageAlt} height={128} objectFit="cover" src={imageUrl} width={192} />
+          <Image
+            alt={props.bookImageAlt}
+            decoding="async"
+            height={128}
+            loading="lazy"
+            objectFit="cover"
+            src={imageUrl}
+            width={192}
+          />
         </_ImgWrapper>
       )}
 
@@ -64,7 +72,15 @@ const BookCard: React.FC<Props> = (props) => {
         <Flex align="center" gap={Space * 1} justify="flex-end">
           {authorImageUrl != null && (
             <_AvatarWrapper>
-              <Image alt={props.bookAuthorName} height={32} objectFit="cover" src={authorImageUrl} width={32} />
+              <Image
+                alt={props.bookAuthorName}
+                decoding="async"
+                height={32}
+                loading="lazy"
+                objectFit="cover"
+                src={authorImageUrl}
+                width={32}
+              />
             </_AvatarWrapper>
           )}
           <Text color={Color.MONO_100} typography={Typography.NORMAL12}>

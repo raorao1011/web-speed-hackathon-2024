@@ -48,8 +48,6 @@ type Props = {
 };
 
 const RankingCard: React.FC<Props> = (props) => {
-  // const { data: book } = useBook({ params: { bookId } });
-
   const imageUrl = useImage({ height: 96, imageId: props.bookImageId, width: 96 });
   const authorImageUrl = useImage({ height: 32, imageId: props.bookAuthorImageId, width: 32 });
 
@@ -60,7 +58,15 @@ const RankingCard: React.FC<Props> = (props) => {
         <Flex align="flex-start" gap={Space * 2.5} justify="flex-start">
           {imageUrl != null && (
             <_ImgWrapper>
-              <Image alt={props.bookName} height={96} objectFit="cover" src={imageUrl} width={96} />
+              <Image
+                alt={props.bookName}
+                decoding="async"
+                height={96}
+                loading="lazy"
+                objectFit="cover"
+                src={imageUrl}
+                width={96}
+              />
             </_ImgWrapper>
           )}
           <Box width="100%">
@@ -80,7 +86,9 @@ const RankingCard: React.FC<Props> = (props) => {
                 <_AvatarWrapper>
                   <Image
                     alt={`${props.bookAuthorName}のアイコン`}
+                    decoding="async"
                     height={32}
+                    loading="lazy"
                     objectFit="cover"
                     src={authorImageUrl}
                     width={32}
